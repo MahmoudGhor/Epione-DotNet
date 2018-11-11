@@ -19,15 +19,6 @@ namespace Data
 
         public DateTime? created_at { get; set; }
 
-        [StringLength(255)]
-        public string justification { get; set; }
-
-        [Column(TypeName = "bit")]
-        public bool recommandPath { get; set; }
-
-        [StringLength(255)]
-        public string type { get; set; }
-
         [Column(TypeName = "bit")]
         public bool validation { get; set; }
 

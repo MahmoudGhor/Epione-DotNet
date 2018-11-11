@@ -9,6 +9,12 @@ namespace Data
     [Table("epione.rating")]
     public partial class rating
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public rating()
+        {
+            appointment = new HashSet<appointment>();
+        }
+
         public int id { get; set; }
 
         [StringLength(255)]
@@ -18,8 +24,7 @@ namespace Data
 
         public int rate { get; set; }
 
-        public int? appointment_id { get; set; }
-
-        public virtual appointment appointment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<appointment> appointment { get; set; }
     }
 }

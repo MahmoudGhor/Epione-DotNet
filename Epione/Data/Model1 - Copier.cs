@@ -8,7 +8,7 @@ namespace Data
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model11")
+            : base("name=Model1")
         {
         }
 
@@ -19,7 +19,6 @@ namespace Data
         public virtual DbSet<doctorformation> doctorformation { get; set; }
         public virtual DbSet<medical_prescription> medical_prescription { get; set; }
         public virtual DbSet<message> message { get; set; }
-        public virtual DbSet<notification> notification { get; set; }
         public virtual DbSet<pattern> pattern { get; set; }
         public virtual DbSet<planning> planning { get; set; }
         public virtual DbSet<rating> rating { get; set; }
@@ -40,11 +39,6 @@ namespace Data
             modelBuilder.Entity<appointment>()
                 .Property(e => e.status)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<appointment>()
-                .HasMany(e => e.rating)
-                .WithOptional(e => e.appointment)
-                .HasForeignKey(e => e.appointment_id);
 
             modelBuilder.Entity<appointment>()
                 .HasMany(e => e.recommandation)
@@ -89,10 +83,6 @@ namespace Data
                 .Property(e => e.content)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<notification>()
-                .Property(e => e.comm)
-                .IsUnicode(false);
-
             modelBuilder.Entity<pattern>()
                 .Property(e => e.label)
                 .IsUnicode(false);
@@ -111,13 +101,10 @@ namespace Data
                 .Property(e => e.comment)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<recommandation>()
-                .Property(e => e.justification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<recommandation>()
-                .Property(e => e.type)
-                .IsUnicode(false);
+            modelBuilder.Entity<rating>()
+                .HasMany(e => e.appointment)
+                .WithOptional(e => e.rating)
+                .HasForeignKey(e => e.rating_id);
 
             modelBuilder.Entity<recommandation>()
                 .HasMany(e => e.user)
@@ -130,7 +117,7 @@ namespace Data
 
             modelBuilder.Entity<speciality>()
                 .HasMany(e => e.user)
-                .WithOptional(e => e.speciality)
+                .WithOptional(e => e.speciality1)
                 .HasForeignKey(e => e.speciality_id);
 
             modelBuilder.Entity<user>()
@@ -186,23 +173,11 @@ namespace Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<user>()
-                .Property(e => e.Doctolib)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<user>()
-                .Property(e => e.OfficeAdress)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<user>()
                 .Property(e => e.Office_Number)
                 .IsUnicode(false);
 
             modelBuilder.Entity<user>()
                 .Property(e => e.PaymentMethod)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<user>()
-                .Property(e => e.Remboursement)
                 .IsUnicode(false);
 
             modelBuilder.Entity<user>()
@@ -214,6 +189,22 @@ namespace Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<user>()
+                .Property(e => e.speciality)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
+                .Property(e => e.Doctolib)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
+                .Property(e => e.OfficeAdress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
+                .Property(e => e.Remboursement)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<user>()
                 .HasMany(e => e.acts)
                 .WithOptional(e => e.user)
                 .HasForeignKey(e => e.doctor_id);
@@ -221,12 +212,12 @@ namespace Data
             modelBuilder.Entity<user>()
                 .HasMany(e => e.appointment)
                 .WithOptional(e => e.user)
-                .HasForeignKey(e => e.doctor_id);
+                .HasForeignKey(e => e.idPatient);
 
             modelBuilder.Entity<user>()
                 .HasMany(e => e.appointment1)
                 .WithOptional(e => e.user1)
-                .HasForeignKey(e => e.patient_id);
+                .HasForeignKey(e => e.idDoctor);
 
             modelBuilder.Entity<user>()
                 .HasMany(e => e.compterendu)
@@ -252,16 +243,6 @@ namespace Data
                 .HasMany(e => e.doctorformation)
                 .WithOptional(e => e.user)
                 .HasForeignKey(e => e.doctor_id);
-
-            modelBuilder.Entity<user>()
-                .HasMany(e => e.notification)
-                .WithOptional(e => e.user)
-                .HasForeignKey(e => e.doctor_id);
-
-            modelBuilder.Entity<user>()
-                .HasMany(e => e.notification1)
-                .WithOptional(e => e.user1)
-                .HasForeignKey(e => e.patient_id);
 
             modelBuilder.Entity<user>()
                 .HasMany(e => e.pattern)
