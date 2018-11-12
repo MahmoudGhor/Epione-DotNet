@@ -1,4 +1,4 @@
-namespace Data
+namespace Domain.entities
 {
     using System;
     using System.Collections.Generic;

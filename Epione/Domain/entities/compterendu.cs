@@ -1,4 +1,4 @@
-namespace Data
+namespace Domain.entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,21 +6,19 @@ namespace Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("epione.notification")]
-    public partial class notification
+    [Table("epione.compterendu")]
+    public partial class compterendu
     {
         public int id { get; set; }
 
         [StringLength(255)]
-        public string comm { get; set; }
+        public string contenu { get; set; }
 
-        public DateTime? sending_date { get; set; }
+        [StringLength(255)]
+        public string document { get; set; }
 
-        [Column(TypeName = "bit")]
-        public bool sentToDoctor { get; set; }
-
-        [Column(TypeName = "bit")]
-        public bool sentToPatient { get; set; }
+        [StringLength(255)]
+        public string img { get; set; }
 
         public int? doctor_id { get; set; }
 

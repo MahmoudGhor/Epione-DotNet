@@ -1,4 +1,4 @@
-namespace Data
+namespace Domain.entities
 {
     using System;
     using System.Collections.Generic;
@@ -53,7 +53,8 @@ namespace Data
         [Column(TypeName = "bit")]
         public bool? connected { get; set; }
 
-        public DateTime? created_at { get; set; }
+        
+        public long created_at { get; set; }
 
         [StringLength(255)]
         public string email { get; set; }
@@ -76,7 +77,7 @@ namespace Data
         [StringLength(255)]
         public string picture { get; set; }
 
-        public int? sexe { get; set; }
+        public string sexe { get; set; }
 
         [StringLength(255)]
         public string token { get; set; }

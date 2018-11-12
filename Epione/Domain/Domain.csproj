@@ -57,13 +57,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="entities\acts.cs" />
+    <Compile Include="entities\appointment.cs" />
+    <Compile Include="entities\compterendu.cs" />
+    <Compile Include="entities\discussion.cs" />
+    <Compile Include="entities\doctorformation.cs" />
+    <Compile Include="entities\medical_prescription.cs" />
+    <Compile Include="entities\message.cs" />
+    <Compile Include="entities\notification.cs" />
+    <Compile Include="entities\pattern.cs" />
+    <Compile Include="entities\planning.cs" />
+    <Compile Include="entities\rating.cs" />
+    <Compile Include="entities\recommandation.cs" />
+    <Compile Include="entities\speciality.cs" />
+    <Compile Include="entities\user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
