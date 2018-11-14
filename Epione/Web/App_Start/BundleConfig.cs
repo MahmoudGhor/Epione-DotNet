@@ -30,7 +30,8 @@ namespace Web
             bundles.Add(new ScriptBundle("~/bundle/homejs").Include(
                                  "~/Scripts/jquery-2.2.4.min.js",
                                  "~/Scripts/common_scripts.min.js",
-                                 "~/Scripts/functions.js"
+                                 "~/Scripts/functions.js",
+                                 "~/Scripts/custom.js"
                                  ));
 
             bundles.Add(new StyleBundle("~/bundle/homecss").Include(

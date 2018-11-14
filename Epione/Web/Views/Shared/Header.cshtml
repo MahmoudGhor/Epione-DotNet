@@ -50,23 +50,30 @@
                         </div>
                     </div>
                     <div class="col-lg-9 col-6">
-                        <ul id="top_access">
-                            <li><a href=@Url.Action("Create","Account")><i class="pe-7s-user"></i></a></li>
-                            <li><a href="register-doctor.html"><i class="pe-7s-add-user"></i></a></li>
-                        </ul>
-                        <nav id="menu" class="main-menu">
-                            <ul>
-                                <li>
-                                    <span><a href="#0">Home</a></span>
-                                </li>
-                             
-                                <li>
-                                    <span><a href="#0">Extra Elements</a></span>
-                                </li>
-                                <li><span><a href="menu_2/index.html">Menu V2</a></span></li>
-                                <li><span><a href="admin_section/index.html" target="_blank">Admin</a></span></li>
+                        @if (Session["firstname"] != null)
+                        {
+                            <nav id="menu" class="main-menu">
+                                <ul>
+                                    <li><span><a href="menu_2/index.html">Doctors</a></span></li>
+                                    <li><span><a href="admin_section/index.html" target="_blank">Contact</a></span></li>
+                                    <li><span><a href="#0">Hello, @Session["firstname"].ToString() @Session["lastname"].ToString()</a></span></li>
+                                </ul>
+                            </nav>
+                        }
+                        else
+                        {
+                            <ul id="top_access">
+                                <li><a href=@Url.Action("Create","Account")><i class="pe-7s-user"></i></a></li>
+                                <li><a href="register-doctor.html"><i class="pe-7s-add-user"></i></a></li>
                             </ul>
-                        </nav>
+
+                            <nav id="menu" class="main-menu">
+                                <ul>
+                                    <li><span><a href="menu_2/index.html">Doctors</a></span></li>
+                                    <li><span><a href="admin_section/index.html" target="_blank">Contact</a></span></li>
+                                </ul>
+                            </nav>
+                        }
                         <!-- /main-menu -->
                     </div>
                 </div>
@@ -74,6 +81,8 @@
             <!-- /container -->
         </header>
         <!-- /header -->
+
+        @RenderPage("~/Views/Shared/ChatPatient.cshtml")
 
         @RenderBody()
         <!-- /main content -->

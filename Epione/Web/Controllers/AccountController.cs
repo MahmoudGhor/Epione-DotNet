@@ -1,4 +1,6 @@
 ﻿using Domain.entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,19 +35,37 @@ namespace Web.Controllers
 
         // POST: Account/Create
         [HttpPost]
-        public ActionResult Create(UserViewModel us)
+        public ActionResult Create(user us)
         {
             HttpClient client = new HttpClient();
-           client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-           var response =  client.PostAsJsonAsync<UserViewModel>("http://localhost:18080/Epione_JEE-web/epione/user/login", us).Result;
+            client.BaseAddress = new Uri("http://127.0.0.1:18080");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response =  client.PostAsJsonAsync<user>("Epione_JEE-web/epione/user/login", us).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                Session["token"] = response.Content.ReadAsAsync<TokenModel>().Result.token;
-                Session["username"] = us.username;
-                Session["type"] = response.Content.ReadAsAsync<TokenModel>().Result.type;
-                return RedirectToAction("Index");
 
+                string rsp = response.Content.ReadAsStringAsync().Result;
+                JObject json = JObject.Parse(rsp);
+                Session["token"] = json["token"];
+                Session["type"] = json["type"];
+                Session["user_id"] = json["user_id"];
+                Session["username"] = us.username;
+
+                var responseUser = client.GetAsync("Epione_JEE-web/epione/user/getUser/"+us.username).Result;
+
+                var user = responseUser.Content.ReadAsAsync<user>().Result;
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Session["id"] = user.id;
+                    Session["firstname"] = user.firstname;
+                    Session["lastname"] = user.lastname;
+                    Session["email"] = user.email;
+                    Session["picture"] = user.picture;
+                    //najmou nzidou les donnes li nist7a9ohom kima birthday ...
+                }
+                return RedirectToAction("Index", "Home");
             }
             else
             {
