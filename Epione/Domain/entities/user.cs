@@ -29,7 +29,7 @@ namespace Domain.entities
 
         [Required]
         [StringLength(31)]
-        public string role { get; set; }
+        public string type { get; set; }
 
         public int id { get; set; }
 

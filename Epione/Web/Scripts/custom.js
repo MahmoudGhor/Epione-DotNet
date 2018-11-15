@@ -8,7 +8,7 @@ sendMessageToKey = function () {
 connect = function () {
 
     yourKey = "1";
-    var webSocketUrl = 'ws://localhost:18080/Epione_JEE-web/chat/quest/' + yourKey;
+    var webSocketUrl = 'ws://localhost:18080/Epione_JEE-web/chat/quest/' + $("#username").val();
     ws = new WebSocket(webSocketUrl);
     ws.onopen = function () {
         ws.send(JSON.stringify({ 'message': "", "doctorName": " ", "patientName": "Patient " + yourKey, "isPatient": "true" }));
