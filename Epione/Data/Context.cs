@@ -137,7 +137,7 @@ namespace Data
                 .HasForeignKey(e => e.speciality_id);
 
             modelBuilder.Entity<user>()
-                .Property(e => e.role)
+                .Property(e => e.type)
                 .IsUnicode(false);
 
             modelBuilder.Entity<user>()
