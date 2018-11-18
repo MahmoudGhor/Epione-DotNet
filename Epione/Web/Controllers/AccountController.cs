@@ -18,7 +18,10 @@ namespace Web.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return View();
+            if (Session["firstname"] != null)
+                return RedirectToAction("Index", "Home");
+            else
+                return View("Index");
         }
 
         // GET: Account/Details/5
@@ -30,7 +33,10 @@ namespace Web.Controllers
         // GET: Account/Create
         public ActionResult Create()
         {
-            return View("Index");
+            if (Session["firstname"] != null)
+                return RedirectToAction("Index", "Home");
+            else
+                return View("Index");
         }
 
         // POST: Account/Create
@@ -41,7 +47,7 @@ namespace Web.Controllers
             client.BaseAddress = new Uri("http://127.0.0.1:18080");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response =  client.PostAsJsonAsync<user>("Epione_JEE-web/epione/user/login", us).Result;
+            var response = client.PostAsJsonAsync<user>("Epione_JEE-web/epione/user/login", us).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
 
@@ -52,11 +58,11 @@ namespace Web.Controllers
                 Session["user_id"] = json["user_id"];
                 Session["username"] = us.username;
 
-                var responseUser = client.GetAsync("Epione_JEE-web/epione/user/getUser/"+us.username).Result;
+                var responseUser = client.GetAsync("Epione_JEE-web/epione/user/getUser/" + us.username).Result;
 
                 var user = responseUser.Content.ReadAsAsync<user>().Result;
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (responseUser.StatusCode == HttpStatusCode.OK)
                 {
                     Session["id"] = user.id;
                     Session["firstname"] = user.firstname;
@@ -69,54 +75,39 @@ namespace Web.Controllers
             }
             else
             {
-                return RedirectToAction("Index","Home");
-            }
-            
-
-        }
-
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
+                TempData["errormsg"] = "Usernemae or password is insorrect.";
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+
         }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Logout()
         {
-            return View();
-        }
 
-        // POST: Account/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://127.0.0.1:18080");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Session["token"].ToString());
 
-                return RedirectToAction("Index");
-            }
-            catch
+            string id = Session["user_id"].ToString();
+            var responseUser = client.GetAsync("Epione_JEE-web/epione/user/logout/" + id).Result;
+
+            if (responseUser.StatusCode == HttpStatusCode.OK)
             {
-                return View();
+
+                //remove the cache 
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+                Response.Cache.SetNoStore();
+                //remove the session
+                Session.Clear();
+                Response.Cookies.Clear();
+                Session.RemoveAll();
+                Session.Abandon();
+                return RedirectToAction("Index", "Account");
             }
+            else
+                return RedirectToAction("Index", "Home");
         }
     }
 }

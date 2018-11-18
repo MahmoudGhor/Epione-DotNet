@@ -56,7 +56,12 @@
                                 <ul>
                                     <li><span><a href="menu_2/index.html">Doctors</a></span></li>
                                     <li><span><a href="admin_section/index.html" target="_blank">Contact</a></span></li>
-                                    <li><span><a href="#0">Hello, @Session["firstname"].ToString() @Session["lastname"].ToString()</a></span></li>
+                                    <li>
+                                        <span><a href="#0">@Session["username"].ToString()</a></span>
+                                        <ul>
+                                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
                         }

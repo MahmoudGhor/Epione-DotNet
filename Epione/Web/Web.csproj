@@ -335,10 +335,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
-    <Content Include="Views\User\login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\View.cshtml" />
     <Content Include="Views\Shared\ChatPatient.cshtml" />
