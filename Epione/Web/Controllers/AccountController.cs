@@ -1,4 +1,4 @@
-﻿using Domain.entities;
+using Domain.entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -104,7 +104,7 @@ namespace Web.Controllers
                 Response.Cookies.Clear();
                 Session.RemoveAll();
                 Session.Abandon();
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction("Index", "Home");
             }
             else
                 return RedirectToAction("Index", "Home");
