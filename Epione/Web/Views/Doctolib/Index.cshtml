@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/Header.cshtml";
+}
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../Scripts/defiant.min.js"></script>
+<body>
+
+
+    <div id="custom-search-input">
+        <div class="input-group">
+            <input type="text" class=" search-query" placeholder="Ex. Name, Specialization ...." id="searchname">
+            <input type="submit" class="btn_search" value="Search" id="searchterm">
+        </div>
+
+    </div>
+    <main>
+        <div id="hero_register">
+            <div class="container margin_120_95">
+                <div class="row">
+                    <div class="col-lg-6" id="searchresults">
+                      
+                        <div class="box_feat_2">
+                            <i class="pe-7s-phone"></i>
+                            <h3>Instantly via Mobile</h3>
+                            <p>Eos eu epicuri eleifend suavitate, te primis placerat suavitate his. Nam ut dico intellegat reprehendunt, everti audiam diceret in pri, id has clita consequat suscipiantur.</p>
+                        </div>
+                    </div>
+                    <!-- /col -->
+                    <div class="col-lg-5 ml-auto">
+                        <div class="box_form">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Specialization">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="City">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select class="form-control">
+                                                <option value="">Country</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Mobile Phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Office Phone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Email Address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <p class="text-center add_top_30"><input type="submit" class="btn_1" value="Submit"></p>
+                                <div class="text-center"><small>Ut nam graece accumsan cotidieque. Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet.</small></div>
+                            </form>
+                        </div>
+                        <!-- /box_form -->
+                    </div>
+                    <!-- /col -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /hero_register -->
+    </main>
+</body>
+
+
+
+
+<script type="text/javascript">
+    // <![CDATA[
+
+
+    document.getElementById("searchterm").onclick = function (evt) {
+        var q = $("#searchterm").val();
+        $.getJSON("http://localhost:18080/Epione_JEE-web/epione/doctolib/getJson?path=/doctors/"+$("#searchname").val()+"/france",
+            function (data) {
+                $("#searchresults").text("");
+
+                console.log(data);
+                $.each(data.jsonld.doctors, function (i, item) {
+                    console.log(item);
+                    $("#searchresults").append('<div class="strip_list wow fadeIn"><figure><a href="detail-page.html"><img src="http:' + item.image + '" alt=""></a></figure><small>' + item.medicalSpecialty + '</small><h3>' + item.name + '</h3><small>' + item.address.name + '<br>' + item.address.streetAddress + '<br>' + item.address.postalCode + ',' + item.address.addressLocality + '</small><a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_3.svg" width="15" height="15" alt=""></a><ul><li><a href="https://www.doctolib.fr' + item.url+'" class="btn_listing">Voir sur Doctolib</a></li><li> </li><li><a href="detail-page.html">Inscription</a></li></ul></div>');
+
+                });
+            });
+    };
+</script>

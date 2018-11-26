@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        <div style="width:100%;height:100%">
+            <canvas id="mypie1" > </canvas>
+        </div>
+ 
+<script>
+    $.ajax({
+
+        success: function () {
+            var aData = [0,1,2,3,4,5];
+            var aLabels = ['1-10','10-20','20-30','30-40','40-60','60-80','80-100'];
+            var aDatasets1 = [@ViewBag.result1[0],@ViewBag.result2[0],@ViewBag.result3[0],@ViewBag.result4[0],@ViewBag.result5[0],@ViewBag.result6[0],@ViewBag.result7[0]];
+            var color = Chart.helpers.color;
+            var dataT = {
+                labels: aLabels,
+                datasets: [{
+                    label: "Patients",
+                    data: aDatasets1,
+                    fill: false,
+                    backgroundColor: ["rgba(54, 162, 235)", "rgba(255, 99, 132)", "rgba(255, 159, 64)", "rgba(255, 205, 86)", "rgba(75, 192, 192)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+                    
+                }]
+            };
+            var ctx = $("#mypie1").get(0).getContext("2d");
+            var myNewChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: dataT,
+                options: {
+                    responsive: true,
+                    title: { display: false, text: 'CHART.JS DEMO CHART' },
+                    legend: { position: 'top' },
+                }
+            });
+        }
+    });
+</script>
+
+
+
+

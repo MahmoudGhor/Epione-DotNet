@@ -1,0 +1,72 @@
+﻿
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<canvas id="mypie3" style="padding: 0;margin: auto;display: block; "> </canvas>
+<div class="alert alert-success" role="alert" id="infoapp">
+</div>
+
+
+
+<script>
+    var confirmed = (@ViewBag.all-@ViewBag.canceled) *100/(@ViewBag.all);
+    var canceled = (@ViewBag.canceled*100)/(@ViewBag.all);
+    $.ajax({
+
+        success: function () {
+            var aData = [0,1,2,3,4,5];
+            var aLabels = ["Rendez vous confirmés", "Rendez vous annulés"];
+            var aDatasets1 = [(@ViewBag.all-@ViewBag.canceled), @ViewBag.canceled];
+            var color = Chart.helpers.color;
+            var dataT = {
+                labels: aLabels,
+                datasets: [{
+                    label: "Patients",
+                    data: aDatasets1,
+                    fill: false,
+                    backgroundColor: ["rgba(127, 255, 0)", "rgba(255, 99, 132)", "rgba(255, 159, 64)", "rgba(255, 205, 86)", "rgba(75, 192, 192)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+
+                }]
+            };
+            var ctx = $("#mypie3").get(0).getContext("2d");
+            var myNewChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: dataT,
+                options: {
+                    responsive: true,
+                    title: { display: false, text: 'CHART.JS DEMO CHART' },
+                    legend: { position: 'top' },
+                    labelString: 'Percentage',
+                }
+            });
+            document.getElementById("mypie3").onclick = function (evt) {
+                var activePoints = myNewChart.getElementsAtEvent(evt);
+                var firstPoint = activePoints[0];
+                var label = myNewChart.data.labels[firstPoint._index];
+                var value = myNewChart.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
+                if (firstPoint !== undefined)
+                    if (label.includes("annulés")) {
+                        document.getElementById("infoapp").innerHTML = canceled + " % des rendez vous sont annulés";
+                    }
+                    else {
+                        document.getElementById("infoapp").innerHTML = confirmed + " % des rendez vous sont confirmés";
+
+                    }
+            };
+        }
+    });
+
+
+
+
+</script>
+
+
+
+
+
+

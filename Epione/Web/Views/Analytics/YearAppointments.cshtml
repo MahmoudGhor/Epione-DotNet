@@ -1,0 +1,71 @@
+﻿
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<canvas id="myChart" style="padding: 0;margin: auto;display: block; "> </canvas>
+
+
+<script>
+
+    Date.locale = {
+        en: {
+            month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        }
+    };
+
+    console.log(Date.locale.en.month_names[1]);
+   var dat=@ViewBag.result1;
+    var data = dat.map(function (e) {
+        return e[0];
+    });
+    var labels = dat.map(function (e) {
+       // return e[1];
+        return Date.locale.en.month_names[e[1]-1];
+    });
+    console.log(data);
+    $.ajax({
+
+              success: function () {
+                      var aData = [0,1,2,3,4,5];
+                      var aLabels = labels;
+                      var aDatasets1=data;
+
+
+                      var color = Chart.helpers.color;
+                      var dataT = {
+                labels: aLabels,
+                          datasets: [{
+                              label: "Rdvs",
+                    data: aDatasets1,
+                    fill: false,
+                    backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                    borderColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                    borderWidth: 1
+                }]
+            };
+                  var ctx = $("#myChart").get(0).getContext("2d");
+                  var myNewChart = new Chart(ctx, {
+                type: 'bar',
+                data: dataT,
+                options: {
+                    responsive: true,
+
+                    title: { display: false, text: 'CHART.JS DEMO CHART' },
+                    legend: { position: 'none' },
+                    scales: {
+                      xAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: false, labelString: '' } }],
+                        yAxes: [{ gridLines: { display: false }, display: true, scaleLabel: { display: true, labelString: 'Nombre de rendez-vous' }, ticks: { stepSize: 1, beginAtZero: true } }]
+                    },
+                }
+              });
+        }
+      });
+</script>
+
+
+
+
