@@ -1,0 +1,296 @@
+﻿@model Web.Models.PatternModel
+  
+  
+@{ 
+    Layout = "~/Views/Shared/HeaderDoctor.cshtml";
+}
+
+<div id="modal-reply-1" class="white-popup mfp-with-anim mfp-hide">
+    <div class="small-dialog-header">
+        <h3>Update pattern</h3>
+    </div>
+    <div id="modal-to-edit" class="message-reply margin-top-0" style="display :none">
+
+
+        <div>
+            <h2>Edit</h2>
+            <div>
+                
+                  <div class="form-horizontal">
+                    
+                         <hr />
+
+
+                      <div class="form-group">
+                        
+                        <label class="control-label col-md-2" for="label">Label</label>
+                              <div class="col-md-10">
+                            
+                               <input hidden id="id" name="label" type="text" value="' + data.id + '">       <input class="form-control text-box single-line" id="label" name="label" type="text" value="">
+                            
+                        </div>
+                        
+                    </div>
+
+                      <div class="form-group">
+                        
+                        <label class="control-label col-md-2" for="periode">periode</label>
+                              <div class="col-md-10">
+                            
+                                   <input class="form-control text-box single-line" id="periode" name="periode" type="text" value="">
+                            
+                        </div>
+                        
+                    </div>
+
+                      <div class="form-group">
+                        
+                        <label class="control-label col-md-2" for="price">price</label>
+                              <div class="col-md-10">
+                            
+                                   <input class="form-control text-box single-line" id="price" name="price" type="text" value="">
+                            
+                        </div>
+                        
+                    </div>
+
+
+                        <div class="form-group">
+                        
+                              <div class="col-md-offset-2 col-md-10">
+                            
+                                      <button id="salim" type="submit" data-dismiss="modal" class="btn btn-default">Update</button>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Tables</li>
+        </ol>
+        <!-- Example DataTables Card-->
+        @if (Session["alertMessageSucc"] != null)
+        {
+            <h1> @Session["alertMessageSucc"].ToString() </h1>
+        }
+        @if (Session["alertMessageError"] != null)
+        {
+            <h1> @Session["alertMessageError"].ToString()  </h1>
+        }
+        <a style="margin-bottom:10px ; color:black" onclick="PopupForm('@Url.Action("AddOrEdit","Pattern")')" class="btn btn-success"><i class="fa fa-plus"></i> Add Pattern</a>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> My Patterns
+            </div>
+            <table  id="patternTable" class="table table-striped table-bordered" style="width:100%" >
+                        <thead>
+                            <tr>
+                                <th>Pattern</th>
+                                <th>periode</th>
+                                <th>price</th>
+                                <th></th>
+                           </tr>
+                        </thead>
+                        
+                       
+                    </table>
+               
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>  
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+@section Scripts {
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+    var Popup, dataTable;
+    $(document).ready(function () {
+        dataTable = $("#patternTable").DataTable({
+
+                "ajax" : {
+                    "url": "@Url.Action("GetPatterns", "Pattern")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    
+                    { "data": "label" },
+                    { "data": "periode" },
+                    { "data": "price" },
+                    {
+                        "data": "id", "render": function (data) {
+                            return "<a class= 'btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit", "Pattern")/"+data+"') style='color:black'> <i class='fa fa-pencil'> </i> Edit </a> <a class= 'btn btn-danger btn-sm' style='color:white' ; 'margin-left:5px' onclick=Delete("+data+")> <i class='fa fa-trash'> </i> Delete </a>"
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                            "width":"150px"
+                    }
+
+                ],
+                "language": {
+                    "emptyTable" : "No data found <b> Add new </b> Pattern"
+                }
+
+                });
+    });
+
+    function PopupForm(url)
+    {
+        
+        var formDiv = $('<div/>');
+        $.get(url)
+        .done(function (response) {
+            formDiv.html(response);
+            Popup = formDiv.dialog({
+                autoOpen: true,
+                resizable: false,
+                title: 'Add new Pattern',
+                height: 500,
+                width: 500,
+                close: function () {
+                    Popup.dialog('destroy').remove();
+                }
+            });
+        });
+    }
+
+    function SubmitForm(form) {
+        $.ajax({
+            type: "POST",
+            url: form.action,
+            data: $(form).serialize(),
+            success: function (data) {
+                if (data.success) {
+                    Popup.dialog("close");
+                    alert("wsellllt");
+                    dataTable.ajax.reload();
+                    $.notify(data.message, {
+                        globalPosition: "top center",
+                        className : "success"
+                    })
+                }
+            }
+        });
+        return false;
+    }
+
+    function Delete(id) {
+        if (confirm('Are you sure to delete this pattern'))
+        {
+            $.ajax({
+                type:"POST",
+                url: '@Url.Action("Delete","Pattern")/'+id,
+                success: function (data) {
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        $.notify(data.message, {
+                            globalPosition: "top center",
+                            className: "success"
+                        })
+                    }
+                }
+            });
+        }
+    }
+
+
+
+</script>
+
+
+    
+    <script>
+
+                                            $(document).ready(function () {
+                                                $("#salim").click(function () {
+                                                    var pathname = window.location.pathname;
+                                                    console.log("test");
+                                                    $("#modal-to-edit").css("display", "none");
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "/Pattern/Edits",
+                                                        data: { "id": $("#id").val(), "label": $("#label").val(), "periode": $("#periode").val(), "price": $("#price").val() },
+                                                        success: function (data) {
+
+
+
+                                                        }
+
+                                                    });
+                                                    windows.location.replace("http://localhost:8993/Pattern/Index");
+                                                });
+
+
+                                            });
+                                            function clickUpdate(id){
+                                                $.ajax({
+                                                    type:"GET",
+                                                    url:"/Pattern/edit",
+                                                    data:{"id":id},
+                                                    success: function (data) {
+                                                        $("#modal-to-edit").css("display" , "block");
+                                                        $("#id").val(data.id);
+                                                        $("#label").val(data.label);
+                                                        $("#periode").val(data.periode);
+                                                        $("#price").val(data.price);
+                                                    }
+
+
+                                                        })
+                                            }
+                                            
+                                            function clickDelete(id){
+                                                alert("wlh wsel");
+                                                $.ajax({
+                                                    type:"POST",
+                                                    url:"/Pattern/Delete",
+                                                    data:{"id":id},
+                                                    success: function (data) {
+                                                        
+                                                    }
+
+
+                                                })
+                                            }
+
+                                            
+
+
+
+
+
+
+    </script>
+  
+
+
+
+}
+
+
+
+
