@@ -301,3 +301,83 @@ p {
     transform: rotate(360deg);
   }
 }
+.buttonUser{
+  position: relative;
+  padding: 3px 5px;
+  margin-right: 6px;
+  margin-bottom: 3px;
+  outline: none;
+  border: none;
+  color: #00aeef;
+  font-family: Poppins,Helvetica,sans-serif;
+  cursor: pointer;
+  z-index: 99;
+}
+.connectbtn1{
+  margin: 0 auto;
+  padding: 5px 3px;
+}
+.connectbtn1 button{
+  cursor: pointer;
+}
+.NoPatient{
+  color: #c51414;
+  text-transform: uppercase;
+  font-family: Poppins,Helvetica,sans-serif;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-top: 30%
+}
+
+.imgDocRounded{
+  border-radius: 50%;
+  width: 200px;
+  align-self: center;
+  border: 1px solid #00aeef;
+  padding: 5px;
+}
+
+.rowCenter{
+  text-align: center;
+}
+
+.rowCenter h1{
+  font-family: Poppins,Helvetica,sans-serif;
+  font-size: 1.5rem;
+  color: #00aeef;
+}
+
+.im2
+{
+    background-image: url('~/Img/emoji5.png');
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.rate-base-layer span, #rate .rate-base-layer span
+{
+    opacity: 0.4;
+}
+
+#inputRate{
+    font-size: 1rem;
+    line-height: 1;
+    margin: 10px 20px 0px;
+    font-weight: 600;
+    color: #3f4079;
+}
+
+.inputRate{
+    font-size: 1rem;
+    line-height: 1;
+    margin: 10px 0px;
+    font-weight: 600;
+    color: #3f4079;
+}

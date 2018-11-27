@@ -31,7 +31,8 @@ namespace Web
                                  "~/Scripts/jquery-2.2.4.min.js",
                                  "~/Scripts/common_scripts.min.js",
                                  "~/Scripts/functions.js",
-                                 "~/Scripts/custom.js"
+                                 "~/Scripts/custom.js",
+                                 "~/Scripts/rater.js"
                                  ));
 
             bundles.Add(new StyleBundle("~/bundle/homecss").Include(

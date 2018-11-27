@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body onload="initTimer()">
 
     <div id="preloader" class="Fixed">
         <div data-loader="circle-side"></div>
@@ -59,7 +59,7 @@
                                     <li>
                                         <span><a href="#0">@Session["username"].ToString()</a></span>
                                         <ul>
-                                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                                            <li>@Html.ActionLink("Logout", "Logout", "Account",null, new { id = "logout" })</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -164,6 +164,8 @@
 
     @Scripts.Render("~/bundle/homejs")
 </body>
+
+@RenderSection("Scripts", required: false)
 
 
 <!-- Mirrored from www.ansonika.com/findoctor/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Nov 2018 22:04:04 GMT -->
