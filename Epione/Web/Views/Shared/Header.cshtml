@@ -56,6 +56,9 @@
                                 <ul>
                                     <li><span><a href="menu_2/index.html">Doctors</a></span></li>
                                     <li><span><a href="admin_section/index.html" target="_blank">Contact</a></span></li>
+                                    <li id="bell">
+                                       
+                                    </li>
                                     <li>
                                         <span><a href="#0">@Session["username"].ToString()</a></span>
                                         <ul>
@@ -80,6 +83,7 @@
                             </nav>
                         }
                         <!-- /main-menu -->
+                        
                     </div>
                 </div>
             </div>
@@ -161,12 +165,54 @@
     <div id="toTop"></div>
     <!-- Back to top button -->
     <!-- COMMON SCRIPTS -->
+    
 
     @Scripts.Render("~/bundle/homejs")
+    @RenderSection("Scripts", required: false)
+    <script src="~/Scripts/jquery.signalR-2.4.0.js"></script>
+    <script src="~/signalR/js"></script>
+@if (Session["username"] != null && @Session["type"].ToString() == "patient")
+{
+        <script>
+             $.connection.hub.start()
+            .done(function() {
+                 console.log("worked");
+                $.connection.myHub.server.notifRate(0,@Session["id"].ToString());
+             })
+            .fail(function() {
+                 console.log("error");
+             });
+
+            $.connection.myHub.client.notifRate = function(t,msg) {
+                if(t=='1')
+                    $("#bell").html('<i class="icon-bell-alt" style="color: cadetblue"></i>');
+                else
+                    $("#bell").html('<i class="icon-bell-alt" style="color: tomato"></i><ul><li><a href="@Url.Action("ListApp", "Rate")">' + msg + '</a></li></ul>');
+             }
+
+
+
+        </script>
+    }
+
+@if (Session["username"] != null && @Session["type"].ToString() == "doctor")
+{
+    <script>
+
+        $.connection.hub.start()
+       .done(function() {
+           console.log("worked");
+       })
+       .fail(function() {
+           console.log("error");
+       });
+
+        $.connection.myHub.client.rateDoc = function(rate, doc, msg) {
+            $("#bell").html('<i class="icon-bell-alt" style="color: tomato"></i><ul><li><a href="@Url.Action("ListApp", "Rate")">' + msg + '</a></li></ul>');
+    }
+    </script>
+}
 </body>
-
-@RenderSection("Scripts", required: false)
-
 
 <!-- Mirrored from www.ansonika.com/findoctor/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Nov 2018 22:04:04 GMT -->
 </html>

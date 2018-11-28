@@ -12,10 +12,57 @@ namespace Web.Controllers
 {
     public class RateController : Controller
     {
-
-        public ActionResult AddRate()
+        public ActionResult ListApp()
         {
-            return View();
+ 
+            if (Session["firstname"] != null && Session["type"].ToString() == "patient")
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://127.0.0.1:18080");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.GetAsync("Epione_JEE-web/epione/rate/lisapp/" + Session["id"]).Result;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    ViewBag.result = response.Content.ReadAsAsync<IEnumerable<Object>>().Result;
+                    //var responseRate = client.GetAsync("Epione_JEE-web/epione/rate/doctorRate/" + ViewBag.result.).Result;
+                }
+                    
+
+                else
+                    ViewBag.result = "error";
+            }
+
+            if (Session["firstname"] != null && Session["type"].ToString() == "patient")
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult AddRate(int id)
+        {
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://127.0.0.1:18080");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = client.GetAsync("Epione_JEE-web/epione/rate/getdocapp/" + id).Result;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.result = response.Content.ReadAsAsync<user>().Result;
+                var responseRate = client.GetAsync("Epione_JEE-web/epione/rate/doctorRate/" + ViewBag.result.id).Result;
+                if (response.StatusCode == HttpStatusCode.OK)
+                    ViewBag.rate = responseRate.Content.ReadAsStringAsync().Result;
+                else
+                    ViewBag.rate = "error";
+            }
+            else
+                ViewBag.result = "error";
+
+            if (Session["firstname"] != null)
+                return View();
+            else
+               return RedirectToAction("Index", "Home");
         }
 
         public ActionResult AddRateAjax(int rate, string message)
@@ -27,12 +74,9 @@ namespace Web.Controllers
             rating r = new rating();
             r.rate = rate;
             r.comment = message;
-            appointment a = new appointment();
+            int id = 1;
 
-            var app = (appointment)Session["app"];
-            r.appointment = app;
-
-            var response = client.PostAsJsonAsync<rating>("Epione_JEE-web/epione/rate/add/" + app.id, r).Result;
+            var response = client.PostAsJsonAsync<rating>("Epione_JEE-web/epione/rate/add/" + id, r).Result;
 
             if (response.StatusCode == HttpStatusCode.OK)
                 ViewBag.result = response.Content.ReadAsAsync<rating>().Result;

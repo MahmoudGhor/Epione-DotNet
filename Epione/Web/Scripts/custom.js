@@ -9,21 +9,21 @@ $(document).ready(function () {
         only_select_one_symbol: true,
         symbols: {
             image2: {
-                base: ['<div style="background-image: url(\'../img/emoji1.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji2.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji3.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji4.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
-                hover: ['<div style="background-image: url(\'../img/emoji1.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji2.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji3.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji4.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
-                selected: ['<div style="background-image: url(\'../img/emoji1.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji2.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji3.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji4.png\');" class="im2">&nbsp;</div>',
-                       '<div style="background-image: url(\'../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
+                base: ['<div style="background-image: url(\'../../img/emoji1.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji2.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji3.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji4.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
+                hover: ['<div style="background-image: url(\'../../img/emoji1.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji2.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji3.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji4.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
+                selected: ['<div style="background-image: url(\'../../img/emoji1.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji2.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji3.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji4.png\');" class="im2">&nbsp;</div>',
+                       '<div style="background-image: url(\'../../img/emoji5.png\');" class="im2">&nbsp;</div>', ],
             },
         },
     });
@@ -254,3 +254,4 @@ $(function () {
 
 	  
 });
+

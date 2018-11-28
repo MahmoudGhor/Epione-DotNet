@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Add Rate";
+    Layout = "~/Views/Shared/Header.cshtml";
+}
+
+<main class="theia-exception">
+    <div id="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li>List of ended appointements</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-12">
+                @{
+                    int counter = 1;
+                    foreach (var it in ViewBag.result)
+                    {
+                        if (it.rated == false)
+                        {
+                            counter = counter + 1;
+                            <div class="strip_list wow fadeIn">
+                                <figure>
+                                    <a href="detail-page.html"><img src="~/Img/@it.doctor.picture" alt=""></a>
+                                </figure>
+                                <small>Appointement</small>
+                                <h3>Dr.@it.doctor.firstname @it.doctor.lastname</h3>
+                                <p>@it.description</p>
+                                <ul style="height: 60px">
+                                    <li>@Html.ActionLink("rate now", "AddRate", "Rate", new { id = @it.id }, new { id = "logout" })</li>
+                                </ul>
+                            </div>
+                        }
+
+                    }
+                    if (counter == 1)
+                    {
+                        <h1>No liste</h1>     
+                    }
+                }
+            </div>
+            <!-- /col -->
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</main>

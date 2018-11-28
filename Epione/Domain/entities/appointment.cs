@@ -19,7 +19,7 @@ namespace Domain.entities
         public int id { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? date { get; set; }
+        public DateTime date { get; set; }
 
         [StringLength(255)]
         public string description { get; set; }
