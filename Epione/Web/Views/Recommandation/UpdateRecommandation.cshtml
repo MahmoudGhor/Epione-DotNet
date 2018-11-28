@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "addRecommandation";
+}
+
+@{
+    Layout = "~/Views/Shared/Header.cshtml";
+}
+
+<main>
+    <div class="bg_color_2">
+        <div class="container margin_60_35">
+            <div id="login-2">
+                <h1>Add a recommandation to the path</h1>
+                <form method="post">
+                    <div class="box_form clearfix">
+
+                        <div class="box_login last">
+                            <div class="form-group">
+                                <input class="form-control" placeholder="The Type of speciality" name="speciality" id="speciality">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Your Justification" name="justification" id="justification">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="@ViewBag.recommandation" name="recommandation" id="recommandation" value="@ViewBag.recommandation" hidden
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="doctor" name="doctor">
+                                    @foreach (var d in ViewBag.doctors)
+                                    {
+                                        <option value="@d.id">@d.firstname @d.lastname</option>
+
+                                    }
+
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="btn_1" type="submit" value="Add">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- /login -->
+        </div>
+    </div>
+</main>

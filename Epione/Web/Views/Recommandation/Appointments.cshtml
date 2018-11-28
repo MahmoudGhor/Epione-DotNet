@@ -1,0 +1,431 @@
+﻿
+@{
+    ViewBag.Title = "Appointments";
+}
+
+@{
+    Layout = "~/Views/Shared/Header.cshtml";
+}
+
+
+
+
+<main class="theia-exception">
+
+    <div class="col-md-6">
+
+    </div>
+
+    <div id="results">
+        <div class="container">
+
+            <div class="row">
+                <div class="notification">
+                    <a href="NotificationDoctor" class="btn btn-info btn-lg">
+                        <span >Open</span>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <h4><strong>List Of </strong>Appointments</h4>
+                    <br />
+                     
+
+
+                </div>
+                <div class="search_bar_list">
+
+
+                    <input type="text" class="form-control" placeholder="Ex. Specialist, Name, Doctor...">
+                    <input type="submit" value="Search">
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /results -->
+    <div class="filters_listing">
+        <div class="container">
+            <ul class="clearfix">
+                <li>
+                    <h6>Type</h6>
+                    <div class="switch-field">
+                        <input type="radio" id="all" name="type_patient" value="all" checked>
+                        <label for="all">All</label>
+                        <input type="radio" id="doctors" name="type_patient" value="doctors">
+                        <label for="doctors">Doctors</label>
+                        <input type="radio" id="clinics" name="type_patient" value="clinics">
+                        <label for="clinics">Clinics</label>
+                    </div>
+                </li>
+                <li>
+                    <h6>Layout</h6>
+                    <div class="layout_view">
+                        <a href="grid-list.html"><i class="icon-th"></i></a>
+                        <a href="#0" class="active"><i class="icon-th-list"></i></a>
+                        <a href="list-map.html"><i class="icon-map-1"></i></a>
+                    </div>
+                </li>
+                <li>
+                    <h6>Sort by</h6>
+                    <select name="orderby" class="selectbox">
+                        <option value="Closest">Closest</option>
+                        <option value="Best rated">Best rated</option>
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /filters -->
+
+
+    @if (Session["username"] != null)
+    {
+        <text> welcome @Session["username"].ToString() </text><br />
+        <text> your token : @Session["token"].ToString() </text>
+        <text> your type @Session["type"].ToString() </text>
+    }
+
+    <div class="container margin_60_35">
+        <div class="row">
+
+
+
+            <div class="col-lg-7">
+                @foreach (var p in ViewBag.appointments)
+                {
+
+                    
+                        <div class="strip_list wow fadeIn" onclick="showDetail()">
+                            <a href="#0" class="wish_bt"></a>
+                            <figure>
+                                <a href="detail-page.html"><img src="img/doctor_listing_1.jpg" alt=""></a>
+                            </figure>
+                            <small>Appointment</small>
+                            <h3>@p.status</h3>
+
+                            <p>Description : @p.description </p>
+                         
+                            <p>Date: @p.date </p>
+                            <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
+                            <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                     
+                            <ul>
+
+                                @Html.ActionLink("Path", "DisplayPathFromAppointment", new { appointment = p.id })
+
+                            </ul>
+                        </div>
+                                
+
+                              
+
+
+
+                    <script type="text/javascript">
+                $(function(){
+                 $("#btnRedirect").click(function(){
+                window.location.href = "@Url.Action("DisplayPatient", "Recommandation")";
+                 });
+                });
+                                            </script>
+
+
+
+
+
+
+                <!-- /strip_list -->
+
+                                            <nav aria-label="" class="add_top_20">
+                                                <ul class="pagination pagination-sm">
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                    </li>
+                                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                <!-- /pagination -->
+                                            }
+            </div>
+
+
+            <aside class="col-lg-4" id="sidebar">
+
+                <div id="map_listing" class="normal_list">
+            
+@if (ViewBag.path != null)
+{
+    foreach (var path in ViewBag.path)
+    {
+                            if (path.validation == true)
+                            {
+                                <div class="strip_list wow fadeIn" onclick="showDetail()">
+                                    <a href="#0" class="wish_bt"></a>
+                           
+                                    <small>Path</small>
+                                    <h3>@path.type</h3>
+
+                                    <p style="color:forestgreen">Validation : Validated </p>
+                                    @{DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                                        DateTime date = start.AddMilliseconds(path.created_at).ToLocalTime();}
+
+                                    <p>Date: @date </p>
+                                    <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
+                                    <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                                    <ul>
+
+                                        <i class="icon-folder-add"> @Html.ActionLink("Add recommandation", "AddRecommandation", new { appointment = @ViewBag.appointment }) </i>
+                                        <br />
+                                        <i class="icon-doc-1"> @Html.ActionLink("Update recommandation", "UpdateRecommandation", new { recommandation = @path.id }) </i>
+                                        <br />
+                                        <i class="icon-trash-1"> @Html.ActionLink("Delete recommandation", "DeleteRecommandation", new { recommandation = @path.id }) </i>
+
+                                     
+                                    </ul>
+                                </div>
+                                        }
+
+                                        else
+                                        {
+                                            <div class="strip_list wow fadeIn" onclick="showDetail()">
+                                                <a href="#0" class="wish_bt"></a>
+                                          
+                                                <small>Path</small>
+                                                <h3>@path.type</h3>
+
+                                                <p style="color:palevioletred">Validation : Not Validated </p>
+                                                @{DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                                                    DateTime date = start.AddMilliseconds(path.created_at).ToLocalTime();}
+
+                                                <p>Date: @date </p>
+                                                <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
+                                                <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                                                <ul>
+
+                                                    <i class="icon-folder-add"> @Html.ActionLink("Add recommandation", "AddRecommandation", new { appointment = @ViewBag.appointment }) </i>
+                                                    <br />
+                                                    <i class="icon-doc-1"> @Html.ActionLink("Update recommandation", "UpdateRecommandation", new { recommandation = @path.id }) </i>
+                                                    <br />
+                                                    <i class="icon-trash-1"> @Html.ActionLink("Delete recommandation", "DeleteRecommandation", new { recommandation = @path.id }) </i>
+
+                                                   
+                                            </div>
+                                                         
+                                                    }
+                                                        }
+                                                    }
+                </div>
+                                                 
+            </aside>
+
+                                             
+
+            @Html.Raw(TempData["msg"])
+
+            <!-- /aside -->
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</main>
+
+
+
+<style>
+        button {
+            display: block;
+            padding: 1em 2em;
+            outline: none;
+            font-weight: 600;
+            border: none;
+            color: #fff;
+            background-color: #3498db;
+            border: 1px solid #1f74ac;
+            border-radius: 0.3em;
+            margin-top: 4em;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #2487c9;
+            }
+
+        /* Notifications */
+
+        .notification {
+            display: inline-block;
+            position: relative;
+            padding: 0.6em;
+            background: #3498db;
+            border-radius: 0.2em;
+            font-size: 1.3em;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+            .notification::before,
+            .notification::after {
+                color: #fff;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            /*.notification::before {
+        display: block;
+        content: "\f0f3";
+        font-family: "FontAwesome";
+        transform-origin: top center;
+    }*/
+
+            .notification::after {
+                font-family: Arial;
+                font-size: 0.7em;
+                font-weight: 700;
+                position: absolute;
+                top: -15px;
+                right: -15px;
+                padding: 5px 8px;
+                line-height: 100%;
+                border: 2px #fff solid;
+                border-radius: 60px;
+                background: #3498db;
+                opacity: 0;
+                content: attr(data-count);
+                opacity: 0;
+                -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+                transition: transform, opacity;
+                transition-duration: 0.3s;
+                transition-timing-function: ease-out;
+            }
+
+            .notification.notify::before {
+                -webkit-animation: ring 1.5s ease;
+                animation: ring 1.5s ease;
+            }
+
+            .notification.show-count::after {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+
+        -webkit-keyframes ring {
+            0%;
+
+        {
+            -webkit-transform: rotate(35deg);
+        }
+
+        12.5% {
+            -webkit-transform: rotate(-30deg);
+        }
+
+        25% {
+            -webkit-transform: rotate(25deg);
+        }
+
+        37.5% {
+            -webkit-transform: rotate(-20deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(15deg);
+        }
+
+        62.5% {
+            -webkit-transform: rotate(-10deg);
+        }
+
+        75% {
+            -webkit-transform: rotate(5deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        }
+
+        -keyframes ring {
+            0%;
+
+        {
+            -webkit-transform: rotate(35deg);
+            transform: rotate(35deg);
+        }
+
+        12.5% {
+            -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg);
+        }
+
+        25% {
+            -webkit-transform: rotate(25deg);
+            transform: rotate(25deg);
+        }
+
+        37.5% {
+            -webkit-transform: rotate(-20deg);
+            transform: rotate(-20deg);
+        }
+
+        50% {
+            -webkit-transform: rotate(15deg);
+            transform: rotate(15deg);
+        }
+
+        62.5% {
+            -webkit-transform: rotate(-10deg);
+            transform: rotate(-10deg);
+        }
+
+        75% {
+            -webkit-transform: rotate(5deg);
+            transform: rotate(5deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        }
+</style>
+
+
+<script>
+
+    var el = document.querySelector('.notification');
+    $( document ).ready(function() {
+        var count = Number(el.getAttribute('data-count')) || 0;
+        el.setAttribute('data-count', count + @ViewBag.nbNotif);
+        el.classList.remove('notify');
+        el.offsetWidth = el.offsetWidth;
+        el.classList.add('notify');
+        if (count === 0) {
+            el.classList.add('show-count');
+        }});
+
+
+    @*document.querySelector('button').addEventListener('click', function () {
+        var count = Number(el.getAttribute('data-count')) || 0;
+        el.setAttribute('data-count', count + @ViewBag.nbNotif);
+        el.classList.remove('notify');
+        el.offsetWidth = el.offsetWidth;
+        el.classList.add('notify');
+        if (count === 0) {
+            el.classList.add('show-count');
+        }
+    }, false);*@
+
+
+</script>
